@@ -7,4 +7,46 @@ max
 min
 select *, 'test' from uzytkownicy ;
 select imie, count(imie) from uzytkownicy group by imie;
+select id as identyfikator, imie, nazwisko from uzytkownicy;
+select (imie || ' ' || nazwisko) as imie_nazw from uzytkownicy;
+
+
+
+create table wojewodztwo(
+    id serial primary key,
+    nazwa varchar(30) not null
+);
+insert into wojewodztwo values (default, 'mazowieckie');
+insert into wojewodztwo values (default, 'podlaskie');
+insert into wojewodztwo values (default, 'zachodniopomorskie');
+insert into wojewodztwo values (default, 'malopolskie');
+
+create table miasto(
+    id serial,
+    nazwa varchar(30) not null,
+    id_wojewodztwo integer references wojewodztwo (id)
+);
+
+insert into miasto values (default, 'Warszawa', 1);
+insert into miasto values (default, 'Plock', 1);
+insert into miasto values (default, 'Bialystok', 2);
+insert into miasto values (default, 'Szczecin', 3);
+insert into miasto values (default, 'Krakow', 4);
+insert into miasto values (default, 'Tarnow', 4);
+insert into miasto values (default, 'Nowy Dwor Maz', 1);
+
+
+alter table uzytkownicy add column id_miasto integer;
+
+select * from uzytkownicy;
+
+
+
+truncate uzytkownicy restart identity;
+
+insert into uzytkownicy values(default, 'Wojtek', 'Potocki', 'wpotocki', 1);
+insert into uzytkownicy values(default, 'Jan', 'Kowalski', 'jkowal', 1);
+insert into uzytkownicy values(default, 'Ewa', null, 'ewa90', 3);
+insert into uzytkownicy values(default, 'Ewa', 'Kowal', 'ewa9', 6);
+insert into uzytkownicy values(default, 'Adam', 'Nowak', 'xxx', 7);
 
