@@ -50,3 +50,12 @@ insert into uzytkownicy values(default, 'Ewa', null, 'ewa90', 3);
 insert into uzytkownicy values(default, 'Ewa', 'Kowal', 'ewa9', 6);
 insert into uzytkownicy values(default, 'Adam', 'Nowak', 'xxx', 7);
 
+
+select 
+  miasto.nazwa, wojewodztwo.nazwa
+from 
+    miasto, wojewodztwo  
+where 
+    miasto.id_wojewodztwo = wojewodztwo.id;
+    
+    
