@@ -1,0 +1,10 @@
+"# SQLki" 
+select avg(id) from uzytkownicy;
+count
+sum
+avg
+max
+min
+select *, 'test' from uzytkownicy ;
+select imie, count(imie) from uzytkownicy group by imie;
+
