@@ -75,5 +75,12 @@ select nazwa from miasto where miasto.id not in (select distinct id_miasto from 
 select m.nazwa from miasto m where not exists (
     select * from uzytkownicy u where m.id = u.id_miasto
 );
+
+select 
+  wojewodztwo.nazwa
+from 
+    wojewodztwo  
+where 
+    (miasto.id_wojewodztwo = wojewodztwo.id) AND (uzytkownicy.id_miasto = miasto.id) AND wojewodztwo.id not in ; 
     
     
