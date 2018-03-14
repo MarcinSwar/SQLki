@@ -82,5 +82,50 @@ from
     wojewodztwo  
 where 
     (miasto.id_wojewodztwo = wojewodztwo.id) AND (uzytkownicy.id_miasto = miasto.id) AND wojewodztwo.id not in ; 
+---------------------------------
+
+select nazwa from wojewodztwo w where w.id not in(
+    select m.id_wojewodztwo from miasto m where exists(
+        select u.id_miasto from uzytkownicy u where u.id_miasto = m.id
+    )
+);
+----------------------------------
+
+select * from wojewodztwo w left join miasto m on w.id =m.id_wojewodztwo;
+
+select * from uzytkownicy u left join miasto m on u.id-miasto=m.id;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+-- 1. wyświetl podsumowanie ile książek jest z danej kategorii sortując malejąco po ilości książek
+
+select count(ks.id_kategoria) as suma, nazwa from kategorie ka join ksiazki ks on ka.id_kategoria = ks.id_kategoria group by ka.id_kategoria order by suma desc;
+
+
+--------------------------------------------
+ -- 2. książki, którego autora były najczęściej wypożyczane i ile razy (wyświetl top 5)
+ 
+ select imie, nazwisko,count(*) as ile from wypozyczenia 
+		join ksiazki on wypozyczenia.id_ksiazka=ksiazki.id_ksiazka
+		join autorzy on ksiazki.id_autor=autorzy.id_autor group by imie, nazwisko
+		order by ile desc;
+----------------------------------------------------------------
+-- 3. które książki były najczęściej wypożyczane
+
+select tytul, count(*) from wypozyczenia 
+	join ksiazki on wypozyczenia.id_ksiazka = ksiazki.id_ksiazka
+	group by tytul
+	order by count desc;
+ --------------------------------------------------------   
     
+
+-- 4. który czytelnik nie wypożyczył żadnej książki?
+
+
+---------------------------------------------------------------------------------------
+
+-- 5. ile książek średnio wypożyczył jeden czytelnik (wynik zaokrąglij do 2 miejsc po przecinku)
+
+-- 6. wyświetl wypożyczenia zwrócone po terminie (termin oddanie to 30 dni od wypożyczenia): login czytelnika | tytuł książki | ile dni po terminie zwrócone (posortuj po ilości dni po terminie malejąco)
+
+-- 7. wyświetl: nazwa wydawnictwa | ilość książek | ilość kategorii | ilość wypożyczeń - posortuj alfabetycznie po wydawnictwie   
     
