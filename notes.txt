@@ -133,6 +133,18 @@ from wypozyczenia;
 
 -- 6. wyświetl wypożyczenia zwrócone po terminie (termin oddanie to 30 dni od wypożyczenia): login czytelnika | tytuł książki | ile dni po terminie zwrócone (posortuj po ilości dni po terminie malejąco)
 
+	
+select czytelnicy.login, ksiazki.tytul, (data_oddania - data_wypozyczenia) as ile_po_terminie
+from wypozyczenia 
+	join czytelnicy on wypozyczenia.id_czytelnik=czytelnicy.id_czytelnik
+	join ksiazki on wypozyczenia.id_ksiazka = ksiazki.id_ksiazka
+
+where data_oddania - data_wypozyczenia >30 
+order by ile_po_terminie desc
+
+
+
+-------------------------------------------------------------------------------------------------------
 -- 7. wyświetl: nazwa wydawnictwa | ilość książek | ilość kategorii | ilość wypożyczeń - posortuj alfabetycznie po wydawnictwie  
 
     select 
