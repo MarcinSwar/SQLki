@@ -125,7 +125,23 @@ select tytul, count(*) from wypozyczenia
 
 -- 5. ile książek średnio wypożyczył jeden czytelnik (wynik zaokrąglij do 2 miejsc po przecinku)
 
+select count(*) as ile_wypozyczen, 
+count(distinct id_czytelnik) as ile_osob, 
+round(cast(count(*)as decimal)/count(distinct id_czytelnik),2) as srednia_na_osobe  
+from wypozyczenia;
+----------------------------------------------------------------------------------------------------
+
 -- 6. wyświetl wypożyczenia zwrócone po terminie (termin oddanie to 30 dni od wypożyczenia): login czytelnika | tytuł książki | ile dni po terminie zwrócone (posortuj po ilości dni po terminie malejąco)
 
--- 7. wyświetl: nazwa wydawnictwa | ilość książek | ilość kategorii | ilość wypożyczeń - posortuj alfabetycznie po wydawnictwie   
-    
+-- 7. wyświetl: nazwa wydawnictwa | ilość książek | ilość kategorii | ilość wypożyczeń - posortuj alfabetycznie po wydawnictwie  
+
+    select 
+	w.nazwa,
+	count(distinct k.id_ksiazka) as "Ilosc ksiazek",
+	count(distinct k.id_kategoria) as "Ilosc kategorii",
+	count(*) as "Ilosc wypozyczen"
+from wydawnictwa w 
+	join ksiazki k on w.id_wydawnictwo = k.id_wydawnictwo
+	join wypozyczenia wyp on k.id_ksiazka = wyp.id_ksiazka
+group by w.id_wydawnictwo
+	order by w.nazwa;
