@@ -1,4 +1,21 @@
-# SQLki
+/*
+DROP TABLE Zamowienia_produkty;
+DROP TABLE Zamowienia;
+DROP TABLE Kody_rabatowe;
+DROP TABLE Status_zamowienia;
+DROP TABLE Forma_platnosci;
+DROP TABLE Forma_dostawy;
+DROP TABLE Faktura;
+DROP TABLE Adres;
+DROP TABLE Uzytkownik;
+DROP TABLE Rola_uzytkownik;
+DROP TABLE Produkt;
+DROP TABLE Kolor;
+DROP TABLE Model;
+DROP TABLE Kategoria;
+DROP TABLE Marka;
+DROP TABLE Plec;
+*/
 
 CREATE TABLE Plec(
 	id_plec serial PRIMARY KEY
@@ -28,8 +45,8 @@ CREATE TABLE Kolor(
 	id_kolor integer PRIMARY KEY
 	,nazwa varchar(10)
 );	
-    
-CREATE TABLE Produk(
+
+CREATE TABLE Produkt(
 	id_produkt serial PRIMARY KEY
 	,id_model integer REFERENCES Model(id_model)
 	,id_kolor integer REFERENCES Kolor(id_kolor)
@@ -42,7 +59,15 @@ CREATE TABLE Rola_uzytkownik(
 	,rola varchar(30)
 );  
 
-CREATE TABLE adres(
+CREATE TABLE Uzytkownik(
+	id_uzytkownik serial PRIMARY KEY
+	,id_rola integer REFERENCES Rola_uzytkownik(id_rola)
+	,imie varchar(30)
+	,nazwisko varchar(30)
+	,email varchar(30) UNIQUE NOT NULL
+);
+
+CREATE TABLE Adres(
 	id_adres serial PRIMARY KEY
 	,id_uzytkownik integer references Uzytkownik(id_uzytkownik)
 	,ulica varchar(30)
@@ -51,13 +76,7 @@ CREATE TABLE adres(
 
 );
 
-CREATE TABLE Uzytkownik(
-	id_uzytkownik serial PRIMARY KEY
-	,id_rola integer REFERENCES Rola_uzytkownik(id_rola)
-	,imie varchar(30)
-	,nazwisko varchar(30)
-	,email varchar(30) UNIQUE NOT NULL
-);
+
 
 CREATE TABLE Faktura(				--
 	id_faktura serial PRIMARY KEY
@@ -86,15 +105,8 @@ CREATE TABLE Status_zamowienia(
 	,status varchar(30)
 );
 
-CREATE TABLE Zamowienia_produkty(
-	id_zamowienia_produkty serial PRIMARY KEY
-	,id_zamowienia integer REFERENCES Zamowienia(id_zamowienia)
-	,id_produkt integer REFERENCES Produkt(id_produkt)
-	,ilosc integer
-	,cena nueric(10, 2)
-);
 
-CREATE TABLE kody_rabatowe(
+CREATE TABLE Kody_rabatowe(
 	id_kody_rabatowe serial PRIMARY KEY
 	,kod varchar(30)
 	,wysokosc_rabatu varchar(30)
@@ -109,14 +121,27 @@ CREATE TABLE Zamowienia(
 	,id_forma_dostawy integer REFERENCES Forma_dostawy(id_forma_dostawy)
 	,id_forma_platnosci integer REFERENCES Forma_platnosci(id_forma_platnosci)
 	,id_faktura integer REFERENCES Faktura(id_faktura)
-	,id_adres_zamowienia REFERENCES Adres(id_adres)
-	,id_adres_dostawy REFERENCES Adres(id_adres)
+	,id_adres_zamowienia integer REFERENCES Adres(id_adres)
+	,id_adres_dostawy integer REFERENCES Adres(id_adres)
 	,id_kody_rabatowe integer REFERENCES Kody_rabatowe(id_kody_rabatowe)
 	,data_zamowienia date not null
 	,data_wysylki date
 	,wartosc numeric(10, 2)
 );
 
+CREATE TABLE Zamowienia_produkty(
+	id_zamowienia_produkty serial PRIMARY KEY
+	,id_zamowienia integer REFERENCES Zamowienia(id_zamowienia)
+	,id_produkt integer REFERENCES Produkt(id_produkt)
+	,ilosc integer
+	,cena numeric(10, 2)
+);
+
+COMMIT;
+
+
 	
   
   
+
+
