@@ -1,0 +1,93 @@
+# SQLki
+
+CREATE TABLE Plec                           --
+	(
+		 id_plec serial PRIMARY KEY
+		,plec varchar(10)
+		
+	);
+  
+  CREATE TABLE Marka                        --
+	(
+		 id_marka serial PRIMARY KEY
+		,nazwa varchar(50)
+		
+	);
+  
+   CREATE TABLE Kategoria                    --
+	(
+		 id_kategoria integer PRIMARY KEY
+		,nazwa varchar(13)
+		
+	);	
+
+CREATE TABLE Model                          --
+	(
+		 id_model serial PRIMARY KEY
+		,id_marka integer REFERENCES Marka(id_marka)
+    ,id_plec integer REFERENCES Plec(id_plec)
+    ,id_kategoria integer REFERENCES Kategoria(id_kategoria)
+		,nazwa varchar(50)
+    ,cena numeric(10, 2)
+		
+	);
+  
+  CREATE TABLE Kolor                        --
+	(
+		 id_kolor integer PRIMARY KEY
+		,nazwa varchar(10)
+		
+	);	
+  
+  
+CREATE TABLE Produkt                         --
+	(
+		 id_produkt serial PRIMARY KEY
+		,id_model integer REFERENCES Model(id_model)
+		,id_kolor integer REFERENCES Kolor(id_kolor)
+    ,rozmiar integer
+    ,ilosc integer
+						
+	);
+  
+CREATE TABLE Rola_uzytkownik(                 --
+     id_rola serial PRIMARY KEY
+    ,rola varchar(30)
+
+);  
+
+CREATE TABLE adres(
+  id_adres serial PRIMARY KEY
+  ,id_uzytkownik integer references Uzytkownik(id_uzytkownik)
+  ,ulica varchar(30)
+  ,kod_pocztowy varchar(30)
+  ,miasto varchar(30)
+
+);
+
+CREATE TABLE Uzytkownik                       --
+	(
+		 id_uzytkownik serial PRIMARY KEY
+		,id_rola integer REFERENCES Rola_uzytkownik(id_rola)
+		,adres_glowny varchar(255)
+		,adres_dostawy varchar(255)
+		,nip varchar(255)
+		
+	);	
+  
+  
+  CREATE TABLE Zamowienie
+  (
+     id_zamowienie serial PRIMARY KEY
+    ,id_zamawiajacy integer REFERENCES Uzytkownik(id_uzytkownik)
+    ,id_przyjmujacy integer REFERENCES Uzytkownik(id_uzytkownik)
+    ,id_produkt integer REFERENCES Produkt(id_produkt)
+    ,data date
+  
+  
+  
+  );
+
+	
+  
+  
